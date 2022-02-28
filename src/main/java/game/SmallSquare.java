@@ -18,14 +18,16 @@ public class SmallSquare {
   private Information information;
   private Player winner = null;
   private BigSquare bigSquare;
+  private Board board;
   private final List<App> observers = new ArrayList<>();
 
-  public SmallSquare(int y, int x, int i, int j, Information information, BigSquare bigSquare) {
+  public SmallSquare(int y, int x, int i, int j, Information information, Board board, BigSquare bigSquare) {
     this.y = y;
     this.x = x;
     this.i = i;
     this.j = j;
     this.information = information;
+    this.board = board;
     this.bigSquare = bigSquare;
   }
 
@@ -52,14 +54,27 @@ public class SmallSquare {
         }
         this.winner = this.information.getCurrentPlayer();
         this.information.changePlayer();
-        this.bigSquare.checkWin(i,j, this.winner);
-        this.chooseNewXY(i,j);
+        if (this.bigSquare.checkWin(i, j, this.winner)) {
+          if (!this.board.checkWin(this.y, this.x, this.winner)) {
+            this.chooseNewXY(-1, -1);
+//          System.out.println(this.winner.getName() + " " + this.y + " " + this.x);
+          } else {
+            System.out.println("WINNER IS " + this.winner.getName());
+          }
+        } else {
+          if (!this.board.checkBigSquareWin(this.i, this.j))
+            this.chooseNewXY(this.i, this.j);
+          else {
+            this.chooseNewXY(-1, -1);
+          }
+        }
       }
     });
   }
 
-  private void chooseNewXY(int i, int j){
-    //TUTAJ TRZEBA WYBRA NOWA POZYCJE W KTOREJ DRUGI GRACZ MA RUCH, TAKZE CALE BOARD TRZEBA TU PRZEKAZAC
+  private void chooseNewXY(int y, int x) {
+    this.information.setCurrentY(y);
+    this.information.setCurrentX(x);
   }
 
 
@@ -72,6 +87,8 @@ public class SmallSquare {
   }
 
   public boolean canBeTouched() {
+    if (this.board.checkBigSquareWin(this.y, this.x))
+      return false;
     if (this.winner != null)
       return false;
     if (this.information.getCurrentY() == this.y && this.information.getCurrentX() == this.x)
