@@ -6,10 +6,10 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class Board extends Square{
-//  private VBox vbox = new VBox();
+public class Board extends Square {
+  //  private VBox vbox = new VBox();
   private Information information;
-//  private Player winner = null;
+  //  private Player winner = null;
   private BigSquare[][] bigSquares = new BigSquare[3][3];
 
   public Board(App app, Information information) {
@@ -21,10 +21,6 @@ public class Board extends Square{
     }
   }
 
-//  public VBox getVbox() {
-//    return this.vbox;
-//  }
-
   public void draw() {
     this.vbox = new VBox();
     for (BigSquare[] bigSquareRow : this.bigSquares) {
@@ -34,14 +30,16 @@ public class Board extends Square{
           bigSquare.draw();
           hbox.getChildren().add(bigSquare.getVbox());
         } else {
-          VBox box = new VBox(new Label(bigSquare.getWinner().getSign()));
-          box.setPrefWidth(129);
-          box.setPrefHeight(129);
+          Label label = new Label(bigSquare.getWinner().getSign());
+          label.setStyle("-fx-font: 100 arial;");
+          VBox box = new VBox(label);
+          box.setPrefWidth(140);
+          box.setPrefHeight(140);
           box.setAlignment(Pos.CENTER);
           hbox.getChildren().add(box);
         }
-        hbox.setSpacing(10);
       }
+      hbox.setSpacing(10);
       this.vbox.getChildren().add(hbox);
     }
     this.vbox.setSpacing(10);
@@ -52,6 +50,6 @@ public class Board extends Square{
   }
 
   public boolean checkWin(int i, int j, Player winner) {
-    return super.checkWin(i,j,winner,this.bigSquares);
+    return super.checkWin(i, j, winner, this.bigSquares);
   }
 }

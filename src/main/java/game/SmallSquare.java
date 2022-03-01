@@ -29,14 +29,14 @@ public class SmallSquare extends Square {
 
   public void draw() {
     this.vbox = new VBox();
-    this.vbox.setPrefWidth(40);
-    this.vbox.setPrefHeight(40);
+    this.setVBoxSize();
     this.vbox.setAlignment(Pos.CENTER);
     this.vbox.setStyle("-fx-background-color: #818582;");
     String str = "";
     if (this.winner != null)
       str = this.winner.getSign();
     Label label = new Label(str);
+    label.setStyle("-fx-font: 40 arial;");
     this.vbox.getChildren().add(label);
     this.vbox.setOnMouseClicked((e) -> {
 //      System.out.println(y + " " + x + " " + i + " " + j + " " + this.canBeTouched());
@@ -64,11 +64,19 @@ public class SmallSquare extends Square {
     });
   }
 
+  private void setVBoxSize(){
+    this.vbox.setPrefWidth(40);
+    this.vbox.setPrefHeight(40);
+    this.vbox.setMinWidth(40);
+    this.vbox.setMinHeight(40);
+    this.vbox.setMaxWidth(40);
+    this.vbox.setMaxHeight(40);
+  }
+
   private void chooseNewXY(int y, int x) {
     this.information.setCurrentY(y);
     this.information.setCurrentX(x);
   }
-
 
   public void addObserver(App gui) {
     this.observers.add(gui);

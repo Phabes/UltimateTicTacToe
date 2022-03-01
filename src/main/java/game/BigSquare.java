@@ -1,6 +1,7 @@
 package game;
 
 import game.gui.App;
+import javafx.geometry.Insets;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -29,10 +30,11 @@ public class BigSquare extends Square {
       for (SmallSquare smallSquare : smallSquareRow) {
         smallSquare.draw();
         hbox.getChildren().add(smallSquare.getVbox());
-        hbox.setSpacing(5);
       }
+      hbox.setSpacing(5);
       this.vbox.getChildren().add(hbox);
     }
+    this.vbox.setPadding(new Insets(5,5,5,5));
     this.vbox.setSpacing(5);
     if (this.y == this.information.getCurrentY() && this.x == this.information.getCurrentX()) {
       this.vbox.setStyle("-fx-background-color: #5aed58;");
