@@ -4,12 +4,8 @@ import game.gui.App;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class BigSquare {
-  private VBox vbox = new VBox();
-  private int y;
-  private int x;
+public class BigSquare extends Square {
   private Information information;
-  private Player winner = null;
   private Board board;
   private SmallSquare[][] smallSquares = new SmallSquare[3][3];
 
@@ -24,20 +20,6 @@ public class BigSquare {
         this.smallSquares[i][j].addObserver(app);
       }
     }
-  }
-
-  public Player getWinner() {
-    return this.winner;
-  }
-
-  public boolean checkIfWon() {
-    if (this.winner != null)
-      return true;
-    return false;
-  }
-
-  public VBox getVbox() {
-    return this.vbox;
   }
 
   public void draw() {
@@ -58,54 +40,12 @@ public class BigSquare {
   }
 
   public boolean checkWin(int i, int j, Player winner) {
-    int count = 0;
-    for (int k = 0; k < 3; k++) {
-      if (smallSquares[k][k].getWinner() != null) {
-        if (smallSquares[k][k].getWinner().equals(winner)) {
-          count++;
-        }
-      }
-    }
-    if (count == 3) {
-      this.winner = winner;
+    return super.checkWin(i,j,winner,this.smallSquares);
+  }
+
+  public boolean checkIfWon() {
+    if (this.winner != null)
       return true;
-    }
-    count = 0;
-    for (int k = 0; k < 3; k++) {
-      if (smallSquares[k][2 - k].getWinner() != null) {
-        if (smallSquares[k][2 - k].getWinner().equals(winner)) {
-          count++;
-        }
-      }
-    }
-    if (count == 3) {
-      this.winner = winner;
-      return true;
-    }
-    count = 0;
-    for (int k = 0; k < 3; k++) {
-      if (smallSquares[i][k].getWinner() != null) {
-        if (smallSquares[i][k].getWinner().equals(winner)) {
-          count++;
-        }
-      }
-    }
-    if (count == 3) {
-      this.winner = winner;
-      return true;
-    }
-    count = 0;
-    for (int k = 0; k < 3; k++) {
-      if (smallSquares[k][j].getWinner() != null) {
-        if (smallSquares[k][j].getWinner().equals(winner)) {
-          count++;
-        }
-      }
-    }
-    if (count == 3) {
-      this.winner = winner;
-      return true;
-    }
     return false;
   }
 }

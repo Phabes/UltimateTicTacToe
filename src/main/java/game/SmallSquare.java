@@ -8,15 +8,11 @@ import javafx.scene.layout.VBox;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SmallSquare {
-  private VBox vbox = new VBox();
+public class SmallSquare extends Square {
   private Label label = new Label();
-  private int y;
-  private int x;
   private int i;
   private int j;
   private Information information;
-  private Player winner = null;
   private BigSquare bigSquare;
   private Board board;
   private final List<App> observers = new ArrayList<>();
@@ -31,10 +27,6 @@ public class SmallSquare {
     this.bigSquare = bigSquare;
   }
 
-  public VBox getVbox() {
-    return this.vbox;
-  }
-
   public void draw() {
     this.vbox = new VBox();
     this.vbox.setPrefWidth(40);
@@ -47,14 +39,14 @@ public class SmallSquare {
     Label label = new Label(str);
     this.vbox.getChildren().add(label);
     this.vbox.setOnMouseClicked((e) -> {
-      System.out.println(y + " " + x + " " + i + " " + j + " " + this.canBeTouched());
+//      System.out.println(y + " " + x + " " + i + " " + j + " " + this.canBeTouched());
       if (this.canBeTouched()) {
         for (App gui : this.observers) {
           gui.refreshBoard();
         }
         this.winner = this.information.getCurrentPlayer();
         this.information.changePlayer();
-        if (this.bigSquare.checkWin(i, j, this.winner)) {
+        if (this.bigSquare.checkWin(this.i, this.j, this.winner)) {
           if (!this.board.checkWin(this.y, this.x, this.winner)) {
             this.chooseNewXY(-1, -1);
 //          System.out.println(this.winner.getName() + " " + this.y + " " + this.x);
@@ -80,10 +72,6 @@ public class SmallSquare {
 
   public void addObserver(App gui) {
     this.observers.add(gui);
-  }
-
-  public Player getWinner() {
-    return winner;
   }
 
   public boolean canBeTouched() {

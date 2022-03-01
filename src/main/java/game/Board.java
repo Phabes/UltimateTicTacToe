@@ -6,10 +6,10 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class Board {
-  private VBox vbox = new VBox();
+public class Board extends Square{
+//  private VBox vbox = new VBox();
   private Information information;
-  private Player winner = null;
+//  private Player winner = null;
   private BigSquare[][] bigSquares = new BigSquare[3][3];
 
   public Board(App app, Information information) {
@@ -21,9 +21,9 @@ public class Board {
     }
   }
 
-  public VBox getVbox() {
-    return this.vbox;
-  }
+//  public VBox getVbox() {
+//    return this.vbox;
+//  }
 
   public void draw() {
     this.vbox = new VBox();
@@ -52,54 +52,6 @@ public class Board {
   }
 
   public boolean checkWin(int i, int j, Player winner) {
-    int count = 0;
-    for (int k = 0; k < 3; k++) {
-      if (bigSquares[k][k].getWinner() != null) {
-        if (bigSquares[k][k].getWinner().equals(winner)) {
-          count++;
-        }
-      }
-    }
-    if (count == 3) {
-      this.winner = winner;
-      return true;
-    }
-    count = 0;
-    for (int k = 0; k < 3; k++) {
-      if (bigSquares[k][2 - k].getWinner() != null) {
-        if (bigSquares[k][2 - k].getWinner().equals(winner)) {
-          count++;
-        }
-      }
-    }
-    if (count == 3) {
-      this.winner = winner;
-      return true;
-    }
-    count = 0;
-    for (int k = 0; k < 3; k++) {
-      if (bigSquares[i][k].getWinner() != null) {
-        if (bigSquares[i][k].getWinner().equals(winner)) {
-          count++;
-        }
-      }
-    }
-    if (count == 3) {
-      this.winner = winner;
-      return true;
-    }
-    count = 0;
-    for (int k = 0; k < 3; k++) {
-      if (bigSquares[k][j].getWinner() != null) {
-        if (bigSquares[k][j].getWinner().equals(winner)) {
-          count++;
-        }
-      }
-    }
-    if (count == 3) {
-      this.winner = winner;
-      return true;
-    }
-    return false;
+    return super.checkWin(i,j,winner,this.bigSquares);
   }
 }
