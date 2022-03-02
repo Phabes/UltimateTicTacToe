@@ -9,12 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SmallSquare extends Square {
-  private Label label = new Label();
-  private int i;
-  private int j;
-  private Information information;
-  private BigSquare bigSquare;
-  private Board board;
+  private final int i;
+  private final int j;
+  private final Information information;
+  private final BigSquare bigSquare;
+  private final Board board;
   private final List<App> observers = new ArrayList<>();
 
   public SmallSquare(int y, int x, int i, int j, Information information, Board board, BigSquare bigSquare) {
@@ -27,52 +26,6 @@ public class SmallSquare extends Square {
     this.bigSquare = bigSquare;
   }
 
-  public void draw() {
-    this.vbox = new VBox();
-    this.setVBoxSize();
-    this.vbox.setAlignment(Pos.CENTER);
-    this.vbox.setStyle("-fx-background-color: #818582;");
-    String str = "";
-    if (this.winner != null)
-      str = this.winner.getSign();
-    Label label = new Label(str);
-    label.setStyle("-fx-font: 40 arial;");
-    this.vbox.getChildren().add(label);
-    this.vbox.setOnMouseClicked((e) -> {
-//      System.out.println(y + " " + x + " " + i + " " + j + " " + this.canBeTouched());
-      if (this.canBeTouched()) {
-        for (App gui : this.observers) {
-          gui.refreshBoard();
-        }
-        this.winner = this.information.getCurrentPlayer();
-        this.information.changePlayer();
-        if (this.bigSquare.checkWin(this.i, this.j, this.winner)) {
-          if (!this.board.checkWin(this.y, this.x, this.winner)) {
-            this.chooseNewXY(-1, -1);
-//          System.out.println(this.winner.getName() + " " + this.y + " " + this.x);
-          } else {
-            System.out.println("WINNER IS " + this.winner.getName());
-          }
-        } else {
-          if (!this.board.checkBigSquareWin(this.i, this.j))
-            this.chooseNewXY(this.i, this.j);
-          else {
-            this.chooseNewXY(-1, -1);
-          }
-        }
-      }
-    });
-  }
-
-  private void setVBoxSize(){
-    this.vbox.setPrefWidth(40);
-    this.vbox.setPrefHeight(40);
-    this.vbox.setMinWidth(40);
-    this.vbox.setMinHeight(40);
-    this.vbox.setMaxWidth(40);
-    this.vbox.setMaxHeight(40);
-  }
-
   private void chooseNewXY(int y, int x) {
     this.information.setCurrentY(y);
     this.information.setCurrentX(x);
@@ -83,14 +36,56 @@ public class SmallSquare extends Square {
   }
 
   public boolean canBeTouched() {
-    if (this.board.checkBigSquareWin(this.y, this.x))
+    if (this.board.checkIfWon())
       return false;
-    if (this.winner != null)
+    if (this.bigSquare.checkIfWon())
+      return false;
+    if (this.checkIfWon())
       return false;
     if (this.information.getCurrentY() == this.y && this.information.getCurrentX() == this.x)
       return true;
-    if (this.information.getCurrentY() == -1 && this.information.getCurrentX() == -1)
-      return true;
-    return false;
+    return this.information.getCurrentY() == -1 && this.information.getCurrentX() == -1;
+  }
+
+  public void draw() {
+    this.vbox = new VBox();
+    this.setVBoxSize();
+    this.vbox.setAlignment(Pos.CENTER);
+    this.vbox.setStyle("-fx-background-color: #818582;");
+    String str = "";
+    if (this.checkIfWon())
+      str = this.winner.getSign();
+    Label label = new Label(str);
+    label.setStyle("-fx-font: 40 arial;");
+    this.vbox.getChildren().add(label);
+    this.vbox.setOnMouseClicked((e) -> {
+      if (this.canBeTouched()) {
+        this.winner = this.information.getCurrentPlayer();
+        this.information.changePlayer();
+        if (this.bigSquare.checkWin(this.i, this.j, this.winner)) {
+          this.bigSquare.setWinner(this.winner);
+          if (this.board.checkWin(this.y, this.x, this.winner))
+            this.board.setWinner(this.winner);
+        }
+        if (!this.board.checkIfWon() && !this.board.checkNextBigSquare(this.i, this.j))
+          this.chooseNewXY(this.i, this.j);
+        else
+          this.chooseNewXY(-1, -1);
+        if (this.board.checkIfWon())
+          this.chooseNewXY(-1, -1);
+        for (App gui : this.observers) {
+          gui.refreshBoard();
+        }
+      }
+    });
+  }
+
+  private void setVBoxSize() {
+    this.vbox.setPrefWidth(40);
+    this.vbox.setPrefHeight(40);
+    this.vbox.setMinWidth(40);
+    this.vbox.setMinHeight(40);
+    this.vbox.setMaxWidth(40);
+    this.vbox.setMaxHeight(40);
   }
 }

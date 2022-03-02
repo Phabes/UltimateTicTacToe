@@ -17,17 +17,15 @@ public class SettingsPanel {
     label1.setPrefWidth(150);
     TextField textField1 = new TextField();
     HBox hbox1 = new HBox(label1, textField1);
-//    hbox1.setPrefWidth(300);
     hbox1.setAlignment(Pos.CENTER);
     Label label2 = new Label("Second Player Name (X): ");
     label2.setPrefWidth(150);
     TextField textField2 = new TextField();
     HBox hbox2 = new HBox(label2, textField2);
-//    hbox2.setPrefWidth(300);
     hbox2.setAlignment(Pos.CENTER);
     Button start = new Button("START");
     start.setOnMouseClicked((e) -> {
-      if (!Objects.equals(textField1.getText(), textField2.getText()) &&!Objects.equals(textField1.getText(), "") && !Objects.equals(textField2.getText(), ""))
+      if (!Objects.equals(textField1.getText(), textField2.getText()) && !Objects.equals(textField1.getText(), "") && !Objects.equals(textField2.getText(), ""))
         app.loadGame(textField1.getText(), textField2.getText());
     });
     this.vbox.getChildren().addAll(hbox1, hbox2, start);

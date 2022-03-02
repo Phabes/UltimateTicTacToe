@@ -5,9 +5,13 @@ import javafx.scene.layout.VBox;
 public interface ISquare {
   VBox getVbox();
 
-  void draw();
+  Player getWinner();
+
+  void setWinner(Player winner);
 
   boolean checkWin(int i, int j, Player winner, Square[][] squares);
 
-  Player getWinner();
+  boolean checkIfWon();
+
+  void draw();
 }

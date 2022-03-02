@@ -7,18 +7,24 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class Board extends Square {
-  //  private VBox vbox = new VBox();
-  private Information information;
-  //  private Player winner = null;
-  private BigSquare[][] bigSquares = new BigSquare[3][3];
+  private final BigSquare[][] bigSquares = new BigSquare[3][3];
 
   public Board(App app, Information information) {
-    this.information = information;
+    this.y = 0;
+    this.x = 0;
     for (int y = 0; y < 3; y++) {
       for (int x = 0; x < 3; x++) {
         this.bigSquares[y][x] = new BigSquare(y, x, information, this, app);
       }
     }
+  }
+
+  public boolean checkNextBigSquare(int y, int x) {
+    return this.bigSquares[y][x].checkIfWon();
+  }
+
+  public boolean checkWin(int i, int j, Player winner) {
+    return super.checkWin(i, j, winner, this.bigSquares);
   }
 
   public void draw() {
@@ -43,13 +49,5 @@ public class Board extends Square {
       this.vbox.getChildren().add(hbox);
     }
     this.vbox.setSpacing(10);
-  }
-
-  public boolean checkBigSquareWin(int y, int x) {
-    return this.bigSquares[y][x].checkIfWon();
-  }
-
-  public boolean checkWin(int i, int j, Player winner) {
-    return super.checkWin(i, j, winner, this.bigSquares);
   }
 }

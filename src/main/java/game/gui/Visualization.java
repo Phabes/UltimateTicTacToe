@@ -8,12 +8,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 
 public class Visualization {
-  private App app;
-  private Board board;
-  private Information information;
+  private final App app;
+  private final Board board;
+  private final Information information;
 
   public Visualization(App app, Board board, Information information) {
     this.app = app;
@@ -42,6 +41,20 @@ public class Visualization {
       this.app.loadSettingsPanel();
     });
     vbox.getChildren().add(restart);
+    vbox.setAlignment(Pos.CENTER);
+    vbox.setMaxWidth(150);
+    vbox.setMinWidth(150);
+    return vbox;
+  }
+
+  public VBox drawWinner() {
+    Player currentPlayer = this.information.getCurrentPlayer();
+    Label label1 = new Label("WINNER IS: " + currentPlayer.getName());
+    Button restart = new Button("RESTART");
+    restart.setOnMouseClicked((e) -> {
+      this.app.loadSettingsPanel();
+    });
+    VBox vbox = new VBox(label1, restart);
     vbox.setAlignment(Pos.CENTER);
     vbox.setMaxWidth(150);
     vbox.setMinWidth(150);
