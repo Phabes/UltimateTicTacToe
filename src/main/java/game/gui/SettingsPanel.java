@@ -13,22 +13,22 @@ public class SettingsPanel {
   private final VBox vbox = new VBox();
 
   public SettingsPanel(App app) {
-    Label label1 = new Label("First Player Name (O): ");
-    label1.setPrefWidth(150);
-    TextField textField1 = new TextField();
-    HBox hbox1 = new HBox(label1, textField1);
-    hbox1.setAlignment(Pos.CENTER);
-    Label label2 = new Label("Second Player Name (X): ");
-    label2.setPrefWidth(150);
-    TextField textField2 = new TextField();
-    HBox hbox2 = new HBox(label2, textField2);
-    hbox2.setAlignment(Pos.CENTER);
-    Button start = new Button("START");
-    start.setOnMouseClicked((e) -> {
-      if (!Objects.equals(textField1.getText(), textField2.getText()) && !Objects.equals(textField1.getText(), "") && !Objects.equals(textField2.getText(), ""))
-        app.loadGame(textField1.getText(), textField2.getText());
+    Label p1NameLabel = new Label("First Player Name (O): ");
+    p1NameLabel.setPrefWidth(150);
+    TextField p1Name = new TextField();
+    HBox p1HBox = new HBox(p1NameLabel, p1Name);
+    p1HBox.setAlignment(Pos.CENTER);
+    Label p2NameLabel = new Label("Second Player Name (X): ");
+    p2NameLabel.setPrefWidth(150);
+    TextField p2Name = new TextField();
+    HBox p2HBox = new HBox(p2NameLabel, p2Name);
+    p2HBox.setAlignment(Pos.CENTER);
+    Button startButton = new Button("START");
+    startButton.setOnMouseClicked((e) -> {
+      if (!Objects.equals(p1Name.getText(), p2Name.getText()) && !Objects.equals(p1Name.getText(), "") && !Objects.equals(p2Name.getText(), ""))
+        app.loadGame(p1Name.getText(), p2Name.getText());
     });
-    this.vbox.getChildren().addAll(hbox1, hbox2, start);
+    this.vbox.getChildren().addAll(p1HBox, p2HBox, startButton);
     this.vbox.setAlignment(Pos.CENTER);
     this.vbox.setSpacing(10);
   }

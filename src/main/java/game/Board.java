@@ -36,13 +36,13 @@ public class Board extends Square {
           bigSquare.draw();
           hbox.getChildren().add(bigSquare.getVbox());
         } else {
-          Label label = new Label(bigSquare.getWinner().getSign());
-          label.setStyle("-fx-font: 100 arial;");
-          VBox box = new VBox(label);
-          box.setPrefWidth(140);
-          box.setPrefHeight(140);
-          box.setAlignment(Pos.CENTER);
-          hbox.getChildren().add(box);
+          Label winnerSign = new Label(bigSquare.getWinner().getSign());
+          winnerSign.setStyle("-fx-font: 100 arial;");
+          VBox winnerBox = new VBox(winnerSign);
+          winnerBox.setPrefWidth(140);
+          winnerBox.setPrefHeight(140);
+          winnerBox.setAlignment(Pos.CENTER);
+          hbox.getChildren().add(winnerBox);
         }
       }
       hbox.setSpacing(10);

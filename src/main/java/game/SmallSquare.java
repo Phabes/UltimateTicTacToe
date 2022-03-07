@@ -52,12 +52,12 @@ public class SmallSquare extends Square {
     this.setVBoxSize();
     this.vbox.setAlignment(Pos.CENTER);
     this.vbox.setStyle("-fx-background-color: #818582;");
-    String str = "";
+    String sign = "";
     if (this.checkIfWon())
-      str = this.winner.getSign();
-    Label label = new Label(str);
-    label.setStyle("-fx-font: 40 arial;");
-    this.vbox.getChildren().add(label);
+      sign = this.winner.getSign();
+    Label signLabel = new Label(sign);
+    signLabel.setStyle("-fx-font: 40 arial;");
+    this.vbox.getChildren().add(signLabel);
     this.vbox.setOnMouseClicked((e) -> {
       if (this.canBeTouched()) {
         this.winner = this.information.getCurrentPlayer();

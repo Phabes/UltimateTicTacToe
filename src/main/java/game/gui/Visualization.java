@@ -28,19 +28,19 @@ public class Visualization {
   public VBox drawInfo() {
     VBox vbox = new VBox();
     Player currentPlayer = this.information.getCurrentPlayer();
-    Label label1 = new Label("CURRENT PLAYER: ");
-    label1.setPrefWidth(120);
-    HBox hbox1 = new HBox(label1, new Label(currentPlayer.getName()));
-    vbox.getChildren().add(hbox1);
-    Label label2 = new Label("CURRENT SIGN: ");
-    label2.setPrefWidth(120);
-    HBox hbox2 = new HBox(label2, new Label(currentPlayer.getSign()));
-    vbox.getChildren().add(hbox2);
-    Button restart = new Button("RESTART");
-    restart.setOnMouseClicked((e) -> {
+    Label currentPlayerLabel = new Label("CURRENT PLAYER: ");
+    currentPlayerLabel.setPrefWidth(120);
+    HBox currentPlayerNameHBox = new HBox(currentPlayerLabel, new Label(currentPlayer.getName()));
+    vbox.getChildren().add(currentPlayerNameHBox);
+    Label currentPlayerSign = new Label("CURRENT SIGN: ");
+    currentPlayerSign.setPrefWidth(120);
+    HBox currentPlayerSignHBox = new HBox(currentPlayerSign, new Label(currentPlayer.getSign()));
+    vbox.getChildren().add(currentPlayerSignHBox);
+    Button restartButton = new Button("RESTART");
+    restartButton.setOnMouseClicked((e) -> {
       this.app.loadSettingsPanel();
     });
-    vbox.getChildren().add(restart);
+    vbox.getChildren().add(restartButton);
     vbox.setAlignment(Pos.CENTER);
     vbox.setMaxWidth(150);
     vbox.setMinWidth(150);
@@ -49,12 +49,12 @@ public class Visualization {
 
   public VBox drawWinner() {
     Player currentPlayer = this.information.getCurrentPlayer();
-    Label label1 = new Label("WINNER IS: " + currentPlayer.getName());
-    Button restart = new Button("RESTART");
-    restart.setOnMouseClicked((e) -> {
+    Label winnerLabel = new Label("WINNER IS: " + currentPlayer.getName());
+    Button restartButton = new Button("RESTART");
+    restartButton.setOnMouseClicked((e) -> {
       this.app.loadSettingsPanel();
     });
-    VBox vbox = new VBox(label1, restart);
+    VBox vbox = new VBox(winnerLabel, restartButton);
     vbox.setAlignment(Pos.CENTER);
     vbox.setMaxWidth(150);
     vbox.setMinWidth(150);
